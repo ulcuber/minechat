@@ -1,0 +1,9 @@
+{
+	"buttons": {
+		"portal": "Portal",
+		"view": "View",
+		"start": "Start",
+		"stop": "Stop",
+		"exit": "Exit"
+	}
+}

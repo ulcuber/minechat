@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+const { resolve, join } = require('path');
+
+const dotenv = require('dotenv');
+const { I18n } = require('i18n');
+
+const Game = require('./src/Game');
+
+const result = dotenv.config({
+  path: resolve(__dirname, '.env'),
+});
+
+if (result.error) {
+  throw result.error;
+}
+
+const i18n = new I18n({
+  locales: ['en'],
+  directory: join(__dirname, 'lang'),
+  objectNotation: true,
+});
+
+i18n.setLocale(
+  (() => {
+    const e = process.env;
+    const lang = e.LC_ALL || e.LC_MESSAGES || e.LANG || e.LANGUAGE;
+    // eslint-disable-next-line no-magic-numbers
+    return lang.slice(0, 2);
+  })(),
+);
+
+let host;
+let port;
+const DEFAULT_PORT = 25565;
+if (process.argv[2]) {
+  [host, port] = process.argv[2].split(':');
+}
+if (!host) {
+  host = process.env.HOST;
+}
+if (!port) {
+  port = process.env.PORT || DEFAULT_PORT;
+}
+port = parseInt(port, 10);
+const username = process.argv[3] || process.env.USERNAME;
+const password = process.argv[4] || process.env.PASSWORD;
+
+const game = new Game(i18n, host, port, username, password);
+game.start();

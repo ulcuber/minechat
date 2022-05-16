@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "lint": "eslint --ext \".js\" --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "@ulcoder/blessed": "^0.2.1",
+    "dotenv": "^16.0.0",
+    "i18n": "^0.14.2",
+    "mineflayer": "^4.3.0",
+    "mineflayer-pathfinder": "^2.1.1",
+    "mineflayer-web-inventory": "^1.8.2",
+    "node-notifier": "^10.0.1",
+    "prismarine-viewer": "^1.23.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
