@@ -1056,6 +1056,8 @@ class Game {
   }
 
   updatePlayers() {
+    if (!this.bot.players) return;
+
     this.playersBox.setContent('');
     this.players = {};
 
@@ -1326,7 +1328,7 @@ class Game {
       const stringUsername = chatUsername.toString();
 
       if (!username.startsWith('~')) {
-        if (!username.startsWith('§')) {
+        if (!username.startsWith('§') && process.env.NOTIFY_JOIN) {
           notifier.notify({
             title: `${stringUsername} joined`,
             message: `${stringUsername} joined the game`,

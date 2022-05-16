@@ -6,6 +6,8 @@ Minechat is minecraft client for chatting without GUI
 -   Uses `prismarine-viewer` to enable viewer at any time (with right click to move)
 -   Uses `mineflayer-web-inventory` to serve inventory preview at any time
 
+![Screenshot](screenshots/screen.jpg "Minechat")
+
 ## Install
 
 Requires NodeJS 16
