@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const { resolve } = require('path');
 const util = require('util');
 const blessed = require('@ulcoder/blessed');
 const notifier = require('node-notifier');
@@ -1251,6 +1252,8 @@ class Game {
     this.bot.once('inject_allowed', () => {
       // eslint-disable-next-line import/no-extraneous-dependencies
       this.ChatMessage = require('prismarine-chat')(this.bot.version);
+
+      this.loader.stop();
     });
 
     this.bot.once('spawn', () => {
@@ -1263,7 +1266,6 @@ class Game {
         this.updatePlayers();
       }
 
-      this.loader.stop();
       this.updateTablist();
 
       this.render();
@@ -1422,10 +1424,21 @@ class Game {
       this.statusBar.now(msg);
       this.logger.channel('game_info').info(msg);
     });
+
+    if (process.env.ENABLE_MAP) {
+      this.bot._client.on('map', ({ data }) => {
+        const imagePath = resolve(__dirname, '..', 'map.png');
+        require('./map')(data).writeImage(imagePath);
+        this.image = blessed.overlayimage({
+          parent: this.screen,
+          file: imagePath,
+        });
+      });
+    }
   }
 
   start() {
-    this.loader.load('Waiting spawn...');
+    this.loader.load(this.i18n.__('loading'));
     this.input.focus();
     this.responsive();
 
